@@ -19,10 +19,10 @@ const api = [
 
 class Home extends React.Component {
 
-    updateApp = nextState => {
-        async function update(){
+    updateApp = (nextState) => {
+        async function update() {
             const { isAvailable } = await Updates.checkForUpdateAsync();
-            if(isAvailable){
+            if (isAvailable) {
                 alert("Olá usuário! O app tem novas atualizações, ao clicar em OK o app será atualizado e aberto novamente. Clique em Ok e aguarde alguns segundos.");
                 await Updates.fetchUpdateAsync();
                 await Updates.reloadAsync();
@@ -53,8 +53,9 @@ class Home extends React.Component {
                         <Hero />
                     </Gradient>
                 </Poster>
-                <Movies label='Recomendados' item={api} />
-				<Movies label='Top 10' item={api} />
+                <Movies label='Prévias' item={api} type="preview" />
+                <Movies label='Recomendados' item={api} type="movie" />
+				<Movies label='Top 10' item={api} type="movie" />
             </Container>
         );
     }

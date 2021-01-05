@@ -50,30 +50,32 @@ const TextButton = styled.Text`
 `;
 
 const Play = styled.TouchableOpacity` 
+    padding-top: 10px;
+    padding-bottom: 10px;
     flex-direction: row;
     background-color: #FFFFFF;
-    width: 142px;
-    height: 32px;
+    width: 110px;
+    height: 35px;
     border-radius: 2px;
     align-items: center;
     justify-content: center;
 `;
 
 const TextPlay = styled.Text`
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     padding-left: 5px;
 `;
 
 export {
-    Container,
-    Banner,
-    Tags,
-    TagItem,
-    Separator,
-    MenuHero,
-    Button,
-    TextButton,
-    Play,
-    TextPlay
-}
+  Container,
+  Banner,
+  Tags,
+  TagItem,
+  Separator,
+  MenuHero,
+  Button,
+  TextButton,
+  Play,
+  TextPlay,
+};
