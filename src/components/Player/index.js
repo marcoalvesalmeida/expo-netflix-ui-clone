@@ -4,27 +4,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import {
   View,
-  SafeAreaView,
-  StyleSheet,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#000',
-  },
-  video: {
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').width * 0.5625,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-});
+import { Container, Controls, ButtonContainer, SliderContainer } from './styles';
 
 export default function Player() {
   const videoRef = useRef(null);
@@ -76,7 +60,7 @@ export default function Player() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <View>
         <Video
           ref={videoRef}
@@ -90,30 +74,32 @@ export default function Player() {
           shouldPlay
           isLooping
           onPlaybackStatusUpdate={handlePlayBackStatusUpdate}
-          style={styles.video}
+          style={{width: Dimensions.get('screen').height, height: Dimensions.get('screen').width}}
         />
-        <View>
-          <View style={styles.buttonContainer}>
+        <Controls>
+          <ButtonContainer>
             <TouchableOpacity onPress={() => skip(false)}>
-              <MaterialIcons name="replay-10" size={50} color="#E50914" />
+              <MaterialIcons name="replay-10" size={50} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity onPress={togglePlayPause}>
-              <MaterialIcons name={iconPausePlay} size={50} color="#E50914" />
+              <MaterialIcons name={iconPausePlay} size={50} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => skip(true)}>
-              <MaterialIcons name="forward-10" size={50} color="#E50914" />
+              <MaterialIcons name="forward-10" size={50} color="#FFFFFF" />
             </TouchableOpacity>
-          </View>
-          <Slider
-            value={position}
-            maximumValue={duration}
-            onSlidingComplete={handleDoneSliding}
-            minimumTrackTintColor="#E50914"
-            thumbTintColor="#E50914"
-            maximumTrackTintColor="#666"
-          />
-        </View>
+          </ButtonContainer>
+          <SliderContainer>
+            <Slider
+              value={position}
+              maximumValue={duration}
+              onSlidingComplete={handleDoneSliding}
+              minimumTrackTintColor="#E50914"
+              thumbTintColor="#E50914"
+              maximumTrackTintColor="#666"
+            />
+          </SliderContainer>
+        </Controls>
       </View>
-    </SafeAreaView>
+    </Container>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Updates from 'expo-updates';
 
 import { TouchableOpacity, Text, AppState } from 'react-native';
@@ -31,8 +31,13 @@ class Home extends React.Component {
         update();
     }
 
-    componentDidMount(){
+    async changeOrientation(){
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
+
+    componentDidUpdate(){
         //AppState.addEventListener("change", this.updateApp);
+        this.changeOrientation();
     };
 
     render(){
