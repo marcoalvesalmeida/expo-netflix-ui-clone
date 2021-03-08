@@ -1,8 +1,8 @@
-name: Expo Publish Production
+name: Expo Publish Staging
 on:
   push:
     branches:
-      - main
+      - develop
 jobs:
   publish:
     name: Install and publish
@@ -18,4 +18,4 @@ jobs:
           expo-username: marcoalvesalmeida
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: yarn install
-      - run: expo publish
+      - run: expo publish --release-channel develop
