@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import styled from 'styled-components';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -11,12 +11,12 @@ export const Container = styled.SafeAreaView`
     background-color: #000000;
 `;
 
-export const Controls = styled.View`
+export const Controls = styled(Animated.View)`
     margin-top: -${screenWidth}px;
     padding-left: 15px;
     padding-right: 15px;
     flex: 1;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.5);
     justify-content: flex-end;
 `;
 

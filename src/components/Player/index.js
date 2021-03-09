@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { MaterialIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
@@ -6,16 +6,29 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Animated
 } from 'react-native';
 
 import { Container, Controls, ButtonContainer, SliderContainer } from './styles';
 
 export default function Player() {
   const videoRef = useRef(null);
+  const [isControls, setIsControls] = useState(true);
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [iconPausePlay, setIconPausePlay] = useState('pause-circle-outline');
+
+  const fadeControls = useRef(new Animated.Value(1)).current;
+
+  const idleScreen = () => {
+    setTimeout(() => hideControls(), 3000);
+  }
+
+  useEffect(() => {
+    idleScreen();
+  }, []);
 
   function handlePlayBackStatusUpdate(e) {
     if (e.isPlaying && !playing) {
@@ -59,47 +72,70 @@ export default function Player() {
     }
   }
 
+  function showControls() {
+    Animated.timing(fadeControls, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+    idleScreen();
+    setIsControls(true);
+  }
+
+  function hideControls() {
+    Animated.timing(fadeControls, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+    setIsControls(false);
+  }
+
   return (
-    <Container>
-      <View>
-        <Video
-          ref={videoRef}
-          source={{
-            uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-          }}
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
-          resizeMode="cover"
-          shouldPlay
-          isLooping
-          onPlaybackStatusUpdate={handlePlayBackStatusUpdate}
-          style={{width: Dimensions.get('screen').height, height: Dimensions.get('screen').width}}
-        />
-        <Controls>
-          <ButtonContainer>
-            <TouchableOpacity onPress={() => skip(false)}>
-              <MaterialIcons name="replay-10" size={50} color="#FFFFFF" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={togglePlayPause}>
-              <MaterialIcons name={iconPausePlay} size={50} color="#FFFFFF" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => skip(true)}>
-              <MaterialIcons name="forward-10" size={50} color="#FFFFFF" />
-            </TouchableOpacity>
-          </ButtonContainer>
-          <SliderContainer>
-            <Slider
-              value={position}
-              maximumValue={duration}
-              onSlidingComplete={handleDoneSliding}
-              minimumTrackTintColor="#E50914"
-              thumbTintColor="#E50914"
-              maximumTrackTintColor="#666"
-            />
-          </SliderContainer>
-        </Controls>
-      </View>
-    </Container>
+    <TouchableWithoutFeedback onPress={isControls ? hideControls : showControls}>
+      <Container>
+        <View>
+          <Video
+            ref={videoRef}
+            source={{
+              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+            }}
+            rate={1.0}
+            volume={1.0}
+            isMuted={false}
+            resizeMode="cover"
+            shouldPlay
+            isLooping
+            onPlaybackStatusUpdate={handlePlayBackStatusUpdate}
+            style={{width: Dimensions.get('screen').height, height: Dimensions.get('screen').width}}
+          />
+          <Controls style={{
+            opacity: fadeControls
+          }}>
+            <ButtonContainer>
+              <TouchableOpacity onPress={() => skip(false)}>
+                <MaterialIcons name="replay-10" size={50} color="#FFFFFF" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={togglePlayPause}>
+                <MaterialIcons name={iconPausePlay} size={50} color="#FFFFFF" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => skip(true)}>
+                <MaterialIcons name="forward-10" size={50} color="#FFFFFF" />
+              </TouchableOpacity>
+            </ButtonContainer>
+            <SliderContainer>
+              <Slider
+                value={position}
+                maximumValue={duration}
+                onSlidingComplete={handleDoneSliding}
+                minimumTrackTintColor="#E50914"
+                thumbTintColor="#E50914"
+                maximumTrackTintColor="#666"
+              />
+            </SliderContainer>
+          </Controls>
+        </View>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 }
