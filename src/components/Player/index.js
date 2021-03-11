@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import {
   View,
@@ -10,9 +11,10 @@ import {
   Animated
 } from 'react-native';
 
-import { Container, Controls, ButtonContainer, SliderContainer } from './styles';
+import { Container, Controls, TopBar, MovieTitle, ButtonContainer, SliderContainer } from './styles';
 
 export default function Player() {
+  const navigation = useNavigation();
   const videoRef = useRef(null);
   const [isControls, setIsControls] = useState(true);
   const [duration, setDuration] = useState(0);
@@ -23,7 +25,7 @@ export default function Player() {
   const fadeControls = useRef(new Animated.Value(1)).current;
 
   const idleScreen = () => {
-    setTimeout(() => hideControls(), 3000);
+    setTimeout(() => hideControls(), 5000);
   }
 
   useEffect(() => {
@@ -112,6 +114,12 @@ export default function Player() {
           <Controls style={{
             opacity: fadeControls
           }}>
+            <TopBar>
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <AntDesign name="arrowleft" size={30} color="#FFFFFF" />
+              </TouchableOpacity>
+              <MovieTitle>Big Buck Bunny</MovieTitle>
+            </TopBar>
             <ButtonContainer>
               <TouchableOpacity onPress={() => skip(false)}>
                 <MaterialIcons name="replay-10" size={50} color="#FFFFFF" />
