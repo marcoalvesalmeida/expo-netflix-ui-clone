@@ -123,7 +123,7 @@ export default function Player() {
               <BackButton onPress={() => navigation.navigate('Home')}>
                 <AntDesign name="arrowleft" size={30} color="#FFFFFF" />
               </BackButton>
-              <MovieTitle>Testando o tírulo centralizado nessa bagaça</MovieTitle>
+              <MovieTitle>Big Buck Bunny</MovieTitle>
               <SizedBox size={30} />
             </TopBar>
             <ButtonContainer>
