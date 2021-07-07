@@ -25,15 +25,23 @@ export const TopBar = styled.View`
     align-items: center;
     justify-content: flex-start;
     margin-bottom: ${screenWidth / 5}px;
-    padding-left: ${screenWidth / 20}px;
-    padding-right: ${screenWidth / 20}px;
+    padding-left: ${screenHeight / 30}px;
+    padding-right: ${screenHeight / 30}px;
+`;
+
+export const BackButton = styled.TouchableOpacity`
+    width: 30px;
+    justify-content: center;
 `;
 
 export const MovieTitle = styled.Text`
     font-size: 16px;
     color: #FFFFFF;
-    width: ${screenHeight  / 20 * 16}px;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: ${screenHeight - (60 + screenHeight / 30 * 2)}px;
 `;
 
 export const ButtonContainer = styled.View`

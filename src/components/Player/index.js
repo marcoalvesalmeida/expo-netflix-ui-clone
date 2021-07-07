@@ -11,7 +11,8 @@ import {
   Animated
 } from 'react-native';
 
-import { Container, Controls, TopBar, MovieTitle, ButtonContainer, SliderContainer } from './styles';
+import { SizedBox } from '../../styles/global';
+import { Container, Controls, TopBar, MovieTitle, ButtonContainer, SliderContainer, BackButton } from './styles';
 
 export default function Player() {
   const navigation = useNavigation();
@@ -29,7 +30,11 @@ export default function Player() {
   }
 
   useEffect(() => {
-    idleScreen();
+    const idleTimer = idleScreen();
+
+    return function cleanup() {
+      clearTimeout(idleTimer);
+    };
   }, []);
 
   function handlePlayBackStatusUpdate(e) {
@@ -115,10 +120,11 @@ export default function Player() {
             opacity: fadeControls
           }}>
             <TopBar>
-              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <BackButton onPress={() => navigation.navigate('Home')}>
                 <AntDesign name="arrowleft" size={30} color="#FFFFFF" />
-              </TouchableOpacity>
+              </BackButton>
               <MovieTitle>Big Buck Bunny</MovieTitle>
+              <SizedBox size={30} />
             </TopBar>
             <ButtonContainer>
               <TouchableOpacity onPress={() => skip(false)}>
