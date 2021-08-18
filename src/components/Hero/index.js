@@ -30,7 +30,7 @@ const Hero = () => {
           <Ionicons name="ios-play" size={26} />
           <TextPlay>Assistir</TextPlay>
         </Play>
-        <Button>
+        <Button onPress={() => navigation.navigate('MovieInfo')}>
           <Feather name="info" size={22} color="#FFFFFF" />
           <TextButton>Saiba mais</TextButton>
         </Button>

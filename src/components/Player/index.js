@@ -25,12 +25,14 @@ export default function Player() {
 
   const fadeControls = useRef(new Animated.Value(1)).current;
 
+  let idleTimer = null;
+
   const idleScreen = () => {
-    setTimeout(() => hideControls(), 5000);
+    return setTimeout(() => hideControls(), 5000);
   }
 
   useEffect(() => {
-    const idleTimer = idleScreen();
+    idleTimer = idleScreen();
 
     return function cleanup() {
       clearTimeout(idleTimer);
@@ -67,6 +69,9 @@ export default function Player() {
     const newPos = bool ? curPos + tenSeconds : curPos - tenSeconds;
 
     videoRef.current.setPositionAsync(newPos);
+    if(!playing){
+      togglePlayPause();
+    }
   }
 
   function togglePlayPause() {
@@ -79,8 +84,8 @@ export default function Player() {
     }
   }
 
-  function showControls() {
-    Animated.timing(fadeControls, {
+  async function showControls() {
+    await Animated.timing(fadeControls, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true
@@ -89,8 +94,8 @@ export default function Player() {
     setIsControls(true);
   }
 
-  function hideControls() {
-    Animated.timing(fadeControls, {
+  async function hideControls() {
+    await Animated.timing(fadeControls, {
       toValue: 0,
       duration: 1000,
       useNativeDriver: true
@@ -99,7 +104,7 @@ export default function Player() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={isControls ? hideControls : showControls}>
+    <TouchableWithoutFeedback onPress={isControls ? hideControls : showControls} accessible={false}>
       <Container>
         <View>
           <Video
@@ -114,7 +119,7 @@ export default function Player() {
             shouldPlay
             isLooping
             onPlaybackStatusUpdate={handlePlayBackStatusUpdate}
-            style={{width: Dimensions.get('screen').height, height: Dimensions.get('screen').width}}
+            style={{width: Dimensions.get('screen').width, height: Dimensions.get('screen').height}}
           />
           <Controls style={{
             opacity: fadeControls

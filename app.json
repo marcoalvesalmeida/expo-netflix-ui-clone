@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "netflix",
+    "scheme": "netflixclone",
+    "name": "Netflix",
     "slug": "netflix",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,7 +26,25 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.marcoalvesalmeida.testenanana"
+      "package": "com.marcoalvesalmeida.netflixclone",
+      "versionCode": 2,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.nortefood.com",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
