@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Movies from 'components/Movies';
+import MyBottomSheet from 'components/MyBottomSheet';
 
 import { Container, Poster, Gradient } from './styles';
 
@@ -14,18 +15,21 @@ const api = [
 	require('../../../assets/movie4.jpg')
 ];
 
-class Home extends React.Component {
+const Home = () => {
 
-    async changeOrientation(){
+    async function changeOrientation(){
         await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
     }
 
-    componentDidUpdate(){
-        this.changeOrientation();
-    };
+    useEffect(() => {
+        changeOrientation();
+    }, [changeOrientation]);
 
-    render(){
-        return (
+    
+    const sheetRef = useRef(null);
+
+    return (
+        <>
             <Container>
                 <Poster
                     source={require('../../../assets/featured.jpg')}>
@@ -42,12 +46,14 @@ class Home extends React.Component {
                         <Hero />
                     </Gradient>
                 </Poster>
-                <Movies label='Prévias' item={api} type="preview" />
-                <Movies label='Recomendados' item={api} type="movie" />
-				<Movies label='Top 10' item={api} type="movie" />
+                <Movies label='Prévias' item={api} type="preview" bottomSheet={() => sheetRef.current.snapTo(0)} />
+                <Movies label='Recomendados' item={api} type="movie" bottomSheet={() => sheetRef.current.snapTo(0)} />
+                <Movies label='Top 10' item={api} type="movie" bottomSheet={() => sheetRef.current.snapTo(0)} />
             </Container>
-        );
-    }
+        
+            <MyBottomSheet sheetRef={sheetRef} close={() => sheetRef.current.snapTo(1)} />
+        </>
+    );
 }
 
 export default Home;

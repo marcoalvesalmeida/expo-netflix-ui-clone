@@ -29,7 +29,7 @@ const PreviewPoster = styled.Image`
     border-color: #fff;
 `;
 
-const MovieCard = styled.View`
+const MovieCard = styled.TouchableOpacity`
     padding-right: 9px;
 `;
 

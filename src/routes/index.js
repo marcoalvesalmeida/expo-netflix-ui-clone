@@ -12,7 +12,15 @@ const Routes = () => {
     prefixes: [prefix, 'https://*.nortefood.com'],
     config: {
       screens: {
-        MoviePlayer: "records", 
+        Home: {
+          screens: {
+            Início: { 
+              screens: {
+                MovieInfo: "titles/:id", 
+              },
+            },
+          },
+        },
       },
     },
   };

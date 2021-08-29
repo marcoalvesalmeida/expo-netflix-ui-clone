@@ -24,7 +24,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000000"
       },
       "package": "com.marcoalvesalmeida.netflixclone",
       "versionCode": 2,
@@ -36,7 +36,7 @@
             {
               "scheme": "https",
               "host": "*.nortefood.com",
-              "pathPrefix": "/records"
+              "pathPrefix": "/titles"
             }
           ],
           "category": [

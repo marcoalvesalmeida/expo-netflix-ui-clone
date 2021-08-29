@@ -13,12 +13,12 @@ const renderPreview = (movie) => (
   <PreviewPoster resizeMode="cover" source={movie} />
 );
 
-const Movies = ({ label, item, type }) => (
+const Movies = ({ label, item, type, bottomSheet }) => (
   <Container>
     <Label>{label}</Label>
     <MovieScroll horizontal>
       {item.map((movie, i) => (
-        <MovieCard key={String(i)}>
+        <MovieCard key={String(i)} onPress={bottomSheet}>
           { type === 'preview' ? renderPreview(movie) : renderMovie(movie) }
         </MovieCard>
       ))}

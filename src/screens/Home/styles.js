@@ -20,5 +20,5 @@ const Gradient = styled(LinearGradient)`
 export {
   Container,
   Poster,
-  Gradient,
+  Gradient
 };
