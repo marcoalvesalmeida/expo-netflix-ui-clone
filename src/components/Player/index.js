@@ -21,23 +21,28 @@ export default function Player() {
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [count, setCount] = useState(0);
   const [iconPausePlay, setIconPausePlay] = useState('pause-circle-outline');
 
   const fadeControls = useRef(new Animated.Value(1)).current;
 
-  let idleTimer = null;
-
-  const idleScreen = () => {
-    return setTimeout(() => hideControls(), 5000);
-  }
+  var idleTimer = null;
 
   useEffect(() => {
-    idleTimer = idleScreen();
+    if(count >= 5){
+      clearTimeout(idleTimer);
+      setCount(0);
+      hideControls();
+    }else{
+      idleTimer = setTimeout(() => {
+        setCount(count+1);
+      }, 1000);
+    }
 
     return function cleanup() {
       clearTimeout(idleTimer);
     };
-  }, []);
+  }, [count]);
 
   function handlePlayBackStatusUpdate(e) {
     if (e.isPlaying && !playing) {
@@ -63,6 +68,7 @@ export default function Player() {
   }
 
   async function skip(bool) {
+    showControls();
     const status = await videoRef.current.getStatusAsync();
     const curPos = status.positionMillis;
     const tenSeconds = 10000;
@@ -75,6 +81,7 @@ export default function Player() {
   }
 
   function togglePlayPause() {
+    showControls();
     if (playing) {
       setIconPausePlay('play-circle-outline');
       videoRef.current.pauseAsync();
@@ -90,7 +97,7 @@ export default function Player() {
       duration: 1000,
       useNativeDriver: true
     }).start();
-    idleScreen();
+    setCount(0);
     setIsControls(true);
   }
 
